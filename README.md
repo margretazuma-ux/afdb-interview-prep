@@ -2,7 +2,7 @@
 
 A single-file, interactive quiz app for preparing to discuss the African Development Bank's strategic direction — its mission, priorities, and the challenges it names for itself.
 
-**Live site:** [https://margretazuma-ux.github.io/afdb-ypp-interview-prep/](https://margretazuma-ux.github.io/afdb-ypp-interview-prep/)
+**Live site:** [https://margretazuma-ux.github.io/afdb-interview-prep/]
 
 ## What it does
 
