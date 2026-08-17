@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AfDB Interview Prep — Knowledge Quiz</title>
+<style>
+  :root{
+    --bg:#0f1720;
+    --panel:#161f2b;
+    --panel-2:#1c2733;
+    --border:#2a3644;
+    --text:#e8edf3;
+    --text-dim:#9fb0c0;
+    --tys:#4f8fdb;
+    --tys-bg:rgba(79,143,219,0.14);
+    --tah:#3fb897;
+    --tah-bg:rgba(63,184,151,0.14);
+    --synth:#c58af0;
+    --synth-bg:rgba(197,138,240,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,#0d141c,#0f1720 300px);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    min-height:100vh;
+    padding:24px 16px 60px;
+  }
+  .wrap{max-width:920px;margin:0 auto;}
+  header{margin-bottom:22px;}
+  h1{font-size:1.5rem;margin:0 0 4px;letter-spacing:-0.01em;}
+  .sub{color:var(--text-dim);font-size:0.92rem;max-width:640px;}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .panel h2{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);margin:0 0 12px;font-weight:600;}
+  .group{margin-bottom:14px;}
+  .group:last-child{margin-bottom:0;}
+  .group-label{display:flex;align-items:center;gap:8px;font-size:0.86rem;font-weight:600;margin-bottom:8px;}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.tys{background:var(--tys);}
+  .dot.tah{background:var(--tah);}
+  .dot.synth{background:var(--synth);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--border);
+    background:var(--panel-2);
+    color:var(--text);
+    border-radius:999px;
+    padding:6px 12px;
+    font-size:0.83rem;
+    cursor:pointer;
+    user-select:none;
+    transition:border-color .15s, background .15s;
+  }
+  .chip input{display:none;}
+  .chip .count{color:var(--text-dim);font-variant-numeric:tabular-nums;}
+  .chip.tys.on{border-color:var(--tys);background:var(--tys-bg);}
+  .chip.tah.on{border-color:var(--tah);background:var(--tah-bg);}
+  .chip.synth.on{border-color:var(--synth);background:var(--synth-bg);}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  button{
+    font-family:inherit;
+    font-size:0.85rem;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--panel-2);
+    color:var(--text);
+    padding:9px 14px;
+    cursor:pointer;
+    transition:filter .15s;
+  }
+  button:hover{filter:brightness(1.15);}
+  button.primary{background:#3564c9;border-color:#3564c9;color:white;font-weight:600;}
+  button.primary:hover{filter:brightness(1.1);}
+  button:disabled{opacity:0.4;cursor:not-allowed;}
+  .status-line{color:var(--text-dim);font-size:0.82rem;margin-top:10px;}
+  #quizPanel{display:none;}
+  .qmeta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;}
+  .tag{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:700;padding:4px 9px;border-radius:6px;}
+  .tag.tys{color:var(--tys);background:var(--tys-bg);}
+  .tag.tah{color:var(--tah);background:var(--tah-bg);}
+  .tag.synth{color:var(--synth);background:var(--synth-bg);}
+  .theme-name{color:var(--text-dim);font-size:0.82rem;}
+  .progress{margin-left:auto;color:var(--text-dim);font-size:0.78rem;font-variant-numeric:tabular-nums;}
+  .qtext{font-size:1.25rem;font-weight:600;margin:6px 0 18px;letter-spacing:-0.01em;}
+  textarea{
+    width:100%;
+    min-height:90px;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text);
+    font-family:inherit;
+    font-size:0.9rem;
+    padding:12px;
+    resize:vertical;
+    margin-bottom:14px;
+  }
+  textarea::placeholder{color:#5b6b7c;}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  #answerBox{
+    display:none;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px dashed var(--border);
+  }
+  #answerBox h3{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-dim);margin:0 0 8px;}
+  #keyPoints{margin:0 0 14px;padding-left:20px;}
+  #keyPoints li{margin-bottom:5px;font-size:0.94rem;}
+  #modelAnswer{font-size:0.96rem;margin-bottom:14px;}
+  blockquote{
+    margin:0 0 4px;
+    padding:12px 14px;
+    background:var(--panel-2);
+    border-left:3px solid var(--accent-line,#e0a83a);
+    border-radius:0 8px 8px 0;
+    font-style:italic;
+    font-size:0.9rem;
+    color:#dcd3b8;
+  }
+  .cite{color:var(--text-dim);font-size:0.78rem;margin-top:4px;}
+  .rating{display:flex;gap:8px;margin-top:16px;}
+  .rating button{flex:1;}
+  .rating button.needs-review.active{background:rgba(219,79,79,0.18);border-color:#db4f4f;}
+  .rating button.got-it.active{background:rgba(79,219,133,0.18);border-color:#3fb877;}
+  .stats{display:flex;gap:18px;color:var(--text-dim);font-size:0.8rem;margin-top:18px;flex-wrap:wrap;}
+  .stats span b{color:var(--text);}
+  .empty-msg{color:var(--text-dim);font-size:0.9rem;padding:20px 0;}
+  footer{color:#5b6b7c;font-size:0.76rem;margin-top:26px;text-align:center;}
+  @media (max-width:520px){
+    .qtext{font-size:1.08rem;}
+    .actions button{flex:1;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AfDB Interview Prep</h1>
+    <div class="sub">Random-recall practice drawn from the Ten-Year Strategy 2024–2033 and Dr. Sidi Ould Tah's presidential vision document. Pick a theme (or mix everything), answer out loud, then reveal the model answer and source quote to check yourself.</div>
+  </header>
+
+  <div class="panel">
+    <h2>Ten-Year Strategy 2024–2033</h2>
+    <div class="group">
+      <div class="chips" id="tysChips"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Dr. Tah's Vision for the AfDB Presidency</h2>
+    <div class="group">
+      <div class="chips" id="tahChips"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Synthesis — connecting the two documents</h2>
+    <div class="group">
+      <div class="chips" id="synthChips"></div>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="mixAllBtn">Mix everything (all themes)</button>
+      <button id="selectAllBtn">Select all</button>
+      <button id="clearAllBtn">Clear all</button>
+      <button class="primary" id="startBtn">Start / update session</button>
+    </div>
+    <div class="status-line" id="statusLine">No themes selected yet.</div>
+  </div>
+
+  <div class="panel" id="quizPanel">
+    <div class="qmeta">
+      <span class="tag" id="qDocTag"></span>
+      <span class="theme-name" id="qThemeName"></span>
+      <span class="progress" id="qProgress"></span>
+    </div>
+    <div class="qtext" id="qText"></div>
+
+    <textarea id="notesArea" placeholder="Optional: jot or rehearse your spoken answer here before revealing (not saved anywhere)."></textarea>
+
+    <div class="actions">
+      <button class="primary" id="revealBtn">Reveal model answer</button>
+      <button id="skipBtn">Skip / next question</button>
+    </div>
+
+    <div id="answerBox">
+      <h3>Key points to hit</h3>
+      <ul id="keyPoints"></ul>
+      <h3>Model answer</h3>
+      <div id="modelAnswer"></div>
+      <h3>Straight from the document</h3>
+      <blockquote id="quoteText"></blockquote>
+      <div class="cite" id="citeText"></div>
+
+      <div class="rating">
+        <button class="needs-review" id="needsReviewBtn">Needs review</button>
+        <button class="got-it" id="gotItBtn">Got it — next</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <span>Answered: <b id="statAnswered">0</b></span>
+      <span>Got it: <b id="statGood">0</b></span>
+      <span>Needs review: <b id="statBad">0</b></span>
+    </div>
+  </div>
+
+  <footer>Built from "Ten-Year Strategy 2024–2033" (AfDB) and "Building Africa's Prosperity: Smart Policy and Innovation" (Dr. Sidi Ould Tah). Page numbers refer to each document's own pagination.</footer>
+</div>
+
+<script>
+// ---------- THEME DEFINITIONS ----------
+const THEMES = [
+  {id:'tys-mission', group:'tys', label:'Mission & Vision'},
+  {id:'tys-light', group:'tys', label:'Light Up and Power Africa'},
+  {id:'tys-feed', group:'tys', label:'Feed Africa'},
+  {id:'tys-industry', group:'tys', label:'Industrialise Africa'},
+  {id:'tys-integrate', group:'tys', label:'Integrate Africa'},
+  {id:'tys-quality', group:'tys', label:'Improve Quality of Life'},
+  {id:'tys-cross', group:'tys', label:'Cross-Cutting Priorities'},
+  {id:'tys-public', group:'tys', label:'Global & Regional Public Goods'},
+  {id:'tys-finance', group:'tys', label:'Private Sector & Finance'},
+  {id:'tys-risk', group:'tys', label:'Risks & Self-Critique'},
+  {id:'tah-context', group:'tah', label:"Who is Dr. Tah / Context"},
+  {id:'tah-cp1', group:'tah', label:'Cardinal Point 1: Access to Capital'},
+  {id:'tah-cp2', group:'tah', label:'Cardinal Point 2: Financial Systems Reform'},
+  {id:'tah-cp3', group:'tah', label:'Cardinal Point 3: Demographic Transformation'},
+  {id:'tah-cp4', group:'tah', label:'Cardinal Point 4: Climate-Resilient Infrastructure'},
+  {id:'tah-institution', group:'tah', label:'Futureproofing the Bank'},
+  {id:'tah-relation', group:'tah', label:'Relationship to the High 5s'},
+  {id:'synth', group:'synth', label:'Synthesis & Comparison'},
+];
+const GROUP_DOC_LABEL = {tys:'TYS 2024–2033', tah:"Tah's Vision", synth:'Synthesis'};
+
+// ---------- QUESTION BANK ----------
+const QUESTIONS = [
+// --- tys-mission ---
+{theme:'tys-mission', q:"What is the AfDB's founding mission, and how does the 2024–2033 strategy treat it?", key:["Mission adopted 60 years ago at founding","To promote sustainable economic development and social progress of Regional Member Countries (RMCs), individually and jointly","The TYS explicitly reaffirms the mission still 'remains relevant' rather than replacing it"], answer:"The Bank's mission has not changed since its founding 60 years ago: to promote the sustainable economic development and social progress of its Regional Member Countries, both individually and jointly. Rather than rewriting it, the 2024–2033 Ten-Year Strategy explicitly reaffirms that this founding mission still holds today, and builds a new operational strategy on top of it.", quote:"The mission of the Bank adopted 60 years ago remains relevant – to promote the sustainable economic development and social progress of Regional Member Countries (RMCs), both individually and jointly.", cite:"TYS, p.1"},
+{theme:'tys-mission', q:"What is the Bank's stated vision for the coming decade, and what continental framework does it draw on?", key:["Vision: 'a prosperous, inclusive, resilient and integrated Africa'","Explicitly grounded in the African Union's Agenda 2063 vision","Positions the Bank as delivering on a pan-African agenda, not just its own institutional goals"], answer:"The Bank's vision for 2024–2033 is 'a prosperous, inclusive, resilient and integrated Africa.' It is deliberately anchored in the African Union's Agenda 2063 vision of an integrated, prosperous and peaceful Africa driven by its own citizens — signaling that the Bank sees itself as an implementing partner for a continental agenda, not just running its own separate strategy.", quote:"The Bank's vision in the coming decade is, 'a prosperous, inclusive, resilient and integrated Africa.'", cite:"TYS, p.19"},
+{theme:'tys-mission', q:"The TYS names two 'twin strategic objectives' underpinning its vision. What are they?", key:["Accelerating inclusive green growth","Driving prosperous and resilient economies","Framed as balancing environment, equity and economy across all Bank work"], answer:"The two twin strategic objectives are accelerating inclusive green growth, and driving prosperous and resilient economies in Africa. The Bank frames these as requiring it to balance environment, equity, and economy across everything it funds, rather than treating sustainability as a side constraint.", quote:"...supporting the vision are twin strategic objectives: accelerating inclusive green growth and driving prosperous and resilient economies in Africa.", cite:"TYS, p.19, para 50"},
+{theme:'tys-mission', q:"What five 'comparative advantages' does the Bank claim make it the right institution to lead this strategy?", key:["An African institution with proximity/trust with African governments","Expertise as a funder of high-quality infrastructure","A mandate to mobilise sustainable development finance for Africa","Ability to give context-specific knowledge and governance capacity support","Power to amplify Africa's voice globally"], answer:"The Bank claims five comparative advantages: its unique standing and proximity as an African-owned, trusted institution; its expertise and track record financing high-quality infrastructure; its mandate to mobilise development finance specifically for Africa; its ability to deliver context-specific knowledge and capacity-building on economic governance; and its power to amplify Africa's voice and influence in global forums.", quote:"(five comparative advantages summarised, TYS para 43)", cite:"TYS, p.16, para 43"},
+
+// --- tys-light ---
+{theme:'tys-light', q:"How large is the electricity-access gap in Africa today, and what is the Bank's 2033 target?", key:["~600 million people (43% of population) lack electricity access","Almost 1 billion lack clean cooking solutions","Target: universal access to electricity and clean cooking by 2033"], answer:"About 600 million Africans — 43% of the continent's population — currently lack access to electricity, and nearly a billion lack clean cooking solutions. The Bank's ambition under 'Light Up and Power Africa' is universal access to both electricity and clean cooking by 2033, which is a large jump from where things stand today.", quote:"By 2033 African households and firms will have access to affordable, reliable, and sustainable and modern energy... Every household will have access to electricity and clean cooking solutions and technology.", cite:"TYS, p.23, para 61"},
+{theme:'tys-light', q:"What pace of new electricity connections would universal access by 2033 actually require?", key:["A threefold increase in the current annual connection rate","To roughly 90 million new connections per year","Roughly half of those via off-grid solutions"], answer:"Reaching universal access by 2033 would require roughly tripling the current rate of new electricity connections, to about 90 million people connected per year — with around half of that delivered through off-grid solutions rather than grid extension alone.", quote:"(threefold increase to ~90 million connections/year, half off-grid)", cite:"TYS, p.23, para 62"},
+{theme:'tys-light', q:"What investment scale does the Bank say is needed to hit the universal energy access target, and what's Africa's advantage on the supply side?", key:["At least a doubling of current investment, to roughly USD190 billion/year through 2030","Africa hosts more than 60% of the world's solar potential","Bank priorities include building an 'African Single Electricity Market' and exporting green hydrogen/ammonia"], answer:"The Bank estimates universal access requires at least doubling current investment, to around USD190 billion a year through 2030. On the resource side, Africa holds over 60% of the world's solar potential, which is why the strategy pushes for regional power-system integration — an 'African Single Electricity Market' — and positions Africa as a future exporter of power and green hydrogen/ammonia, not just a consumer of energy investment.", quote:"(USD190 billion/year investment estimate)", cite:"TYS, p.23, para 63"},
+{theme:'tys-light', q:"Why can't utilities alone solve the energy access problem, according to the TYS?", key:["Many utilities cannot cover their own operating costs","Cited causes: inefficiency, poor governance, high system losses, sub-optimal pricing"], answer:"The TYS points out that many African utilities are financially unsustainable — unable to cover their own operating costs — because of inefficiency, weak governance, high system losses, and pricing that doesn't reflect real costs. That's why 'utility sustainability' is named as one of the Bank's priorities under this pillar, alongside building new generation capacity.", quote:"(utility cost-recovery and governance constraints, para 63)", cite:"TYS, p.23, para 63"},
+
+// --- tys-feed ---
+{theme:'tys-feed', q:"What's the paradox the TYS highlights about African agriculture?", key:["Africa holds 65% of the world's unused arable land","Yet runs a USD50 billion/year agricultural trade deficit","Framed as a structural vulnerability, not a resource shortage"], answer:"The paradox is that Africa holds roughly 65% of the world's remaining unused arable land, yet still runs an agricultural trade deficit of about USD50 billion a year and is a net food importer. The TYS frames this explicitly as a structural failure to convert an underlying resource advantage into food security, rather than a genuine scarcity problem.", quote:"Africa's agricultural trade deficit is USD50 billion a year, despite the continent holding 65% of the world's unused arable land.", cite:"TYS, p.9 / p.26, paras 21, 72"},
+{theme:'tys-feed', q:"What does the TYS say about African cereal yields and import dependence?", key:["Africa's cereal import bill runs about USD75 billion/year","Cereal yields are roughly half those of India and Bangladesh","15 countries depend on Russia/Ukraine for over half their wheat imports"], answer:"Africa spends around USD75 billion a year importing cereals, while its own cereal yields sit at roughly half the level achieved in India and Bangladesh — pointing to a productivity gap rather than a land gap. The document also flags a geopolitical vulnerability: 15 African countries depend on Russia and Ukraine for more than half their wheat imports.", quote:"Africa's food import bill currently stands at USD75 billion a year for cereals alone.", cite:"TYS, p.26 infographic / p.15, para 38"},
+{theme:'tys-feed', q:"How much investment does the Bank say is needed to transform African agriculture, and what's the market upside?", key:["Up to USD40 billion/year needed across 18 key value chains","Could unlock markets worth USD85 billion annually","Africa's food/agriculture market could grow from ~USD280bn (2023) to USD1 trillion by 2030"], answer:"The Bank estimates up to USD40 billion a year is needed to transform production across 18 priority agricultural value chains, which it argues could open roughly USD85 billion a year in new markets. It frames the upside in bigger terms too: Africa's food and agriculture market could roughly quadruple, from about USD280 billion in 2023 to USD1 trillion by 2030, if that investment materialises.", quote:"(USD40bn/year investment need; USD280bn to USD1 trillion market growth)", cite:"TYS, p.26, para 74"},
+{theme:'tys-feed', q:"What are the Bank's main levers under 'Feed Africa,' and what event does it cite as political backing?", key:["Investing in climate-smart agricultural value chains, including Special Agro-industrial Processing Zones","Expanding input supply chains (seeds, fertilisers)","Nutrition-focused investment","Cites the January 2023 Africa Food Summit in Dakar as a political commitment anchor"], answer:"The Bank's approach centers on climate-smart agricultural value chains — including Special Agro-industrial Processing Zones — expanding access to better seeds and fertiliser, and 'nutrition-smart' investment tied to a Multisectoral Nutrition Action Plan. It anchors this politically in the January 2023 Africa Food Summit in Dakar, where African heads of state committed to accelerating investment in food and nutrition security.", quote:"(Dakar Africa Food Summit, January 2023, commitment reference)", cite:"TYS, p.27, para 76"},
+
+// --- tys-industry ---
+{theme:'tys-industry', q:"How small is Africa's share of global manufacturing and investment today?", key:["Manufacturing value-added is only about 11.2% of GDP","Africa attracts just 3.5% of global FDI, mostly extractive-sector","Africa accounts for less than 3% of global manufacturing value-added"], answer:"Despite growth over the past five years, manufacturing value-added still sits at only about 11.2% of Africa's GDP, well below other regions. Africa also attracts just 3.5% of global foreign direct investment — and most of that goes into extractive/natural-resource sectors rather than manufacturing — leaving the continent with less than 3% of global manufacturing value-added overall.", quote:"(11.2% of GDP manufacturing value-added; 3.5% of global FDI)", cite:"TYS, p.28 / p.49, paras 78, 136"},
+{theme:'tys-industry', q:"What structural constraints does the TYS name as holding back African industrialisation?", key:["Weak physical and digital infrastructure","Small, fragmented national markets","Weak human capital — low tertiary enrolment (~10%), even lower in STEM","Gender disparities in wages and access to manufacturing jobs","Limited access to credit / underdeveloped capital markets"], answer:"The TYS names a cluster of structural constraints: weak physical and digital infrastructure, small and fragmented national markets, weak human capital (tertiary enrolment around only 10%, and lower still in STEM fields), gender disparities in wages and job access within manufacturing, and limited access to credit due to underdeveloped capital markets.", quote:"(structural constraints, para 79)", cite:"TYS, p.28-29, para 79"},
+{theme:'tys-industry', q:"What five priority sectors does the Bank name under 'Industrialise Africa'?", key:["Agroprocessing in special processing zones","Beneficiation of extractive resources (critical minerals like cobalt, lithium, nickel for EV supply chains)","Connectivity, digital and data infrastructure","Pharmaceuticals and vaccine manufacturing","Fixing textile-sector bottlenecks in logistics and skills"], answer:"The five priority sectors are: agroprocessing within special processing zones; beneficiation of extractive resources — turning raw critical minerals like cobalt, lithium and nickel into value-added inputs for EV supply chains rather than exporting them raw; connectivity, digital and data infrastructure; pharmaceuticals and vaccine manufacturing; and fixing logistics and skills bottlenecks in the textile sector.", quote:"(five priority sectors, para 81)", cite:"TYS, p.30, para 81"},
+{theme:'tys-industry', q:"What specific target does the TYS set for African pharmaceutical production?", key:["Vision 2030 Pharmaceutical Action Plan","Aims for African producers to supply around 50% of the African pharmaceutical market by 2030"], answer:"Under the Vision 2030 Pharmaceutical Action Plan, the Bank supports a target of African manufacturers supplying around 50% of the African pharmaceutical market by 2030 — reducing reliance on imported medicines and vaccines, a vulnerability that COVID-19 exposed sharply.", quote:"(50% of African pharmaceutical market target by 2030)", cite:"TYS, p.30, para 81"},
+
+// --- tys-integrate ---
+{theme:'tys-integrate', q:"Why does the TYS describe Africa's economic fragmentation as a barrier, and how big is the intra-African trade problem?", key:["54 national economies, many small and landlocked","Intra-African trade is only about 15% of total African trade","Framed as a long-standing barrier to the continent's progress"], answer:"Africa is divided into 54 national economies, many of them small and landlocked, which the TYS calls a long-standing barrier to progress. The scale of the problem shows up in trade data: intra-African trade is only about 15% of Africa's total trade, far lower than intra-regional trade shares in other parts of the world.", quote:"(54 national economies as a barrier to progress; 15% intra-African trade share)", cite:"TYS, p.31-32, paras 83-84"},
+{theme:'tys-integrate', q:"What does poor cross-border infrastructure cost African trade in practice?", key:["Adds an estimated 30-40% to the cost of goods traded across African borders","Source cited: Infrastructure Consortium of Africa"], answer:"According to the Infrastructure Consortium of Africa, cited in the TYS, poor transport infrastructure and border management add an estimated 30–40% to the cost of goods traded across African borders — a concrete illustration of why 'Integrate Africa' treats physical connectivity as a precondition for trade integration, not a side issue.", quote:"(30-40% added cost from poor cross-border infrastructure)", cite:"TYS, p.53, para 154"},
+{theme:'tys-integrate', q:"What economic upside does the Bank attach to full AfCFTA implementation?", key:["Tariffs removed on over 90% of intra-African trade by 2035","Could raise trade by USD450 billion by 2035","Could raise average incomes by 7% and lift 30 million people out of poverty"], answer:"The Bank cites striking numbers for full AfCFTA implementation: tariffs phased out on over 90% of intra-African trade by 2035, a potential USD450 billion increase in trade, a roughly 7% rise in average incomes, and 30 million people lifted out of poverty — assuming the 'practical challenges' of implementation are actually overcome.", quote:"If the practical challenges are overcome, full implementation of AfCFTA could increase trade by USD450 billion by 2035, raising average incomes by 7% and lifting 30 million people out of poverty.", cite:"TYS, p.31, para 83"},
+{theme:'tys-integrate', q:"What are the Bank's three named priorities under 'Integrate Africa'?", key:["Scaling up infrastructure connectivity","Promoting cross-border trade and investment (supporting AfCFTA implementation, harmonising regulations)","Deepening Africa's financial integration"], answer:"The Bank organises 'Integrate Africa' around three priorities: scaling up cross-border infrastructure connectivity; promoting cross-border trade and investment, including direct support for AfCFTA implementation and harmonising laws and regulations across countries; and deepening Africa's financial integration.", quote:"(three integration priorities, para 87)", cite:"TYS, p.32-33, para 87"},
+
+// --- tys-quality ---
+{theme:'tys-quality', q:"How does the TYS characterise Africa's health infrastructure gap?", key:["Africa has 18% of world population but 24% of global disease burden and 50% of deaths from communicable diseases","Only 1.3 hospital beds per 1,000 people, vs 6.1 in Europe","Only 1 ICU bed per 100,000 people, vs 7 in India"], answer:"Africa carries a disproportionate health burden — 18% of the world's population but 24% of the global disease burden and half of all deaths from communicable diseases — while having far less capacity to treat it: only 1.3 hospital beds per 1,000 people compared to 6.1 in Europe, and just one ICU bed per 100,000 people compared to seven in India.", quote:"Africa has only 1.3 hospital beds per 1,000 people (compared with 6.1 in Europe) and only one intensive care bed for every 100,000 people (compared with seven in India).", cite:"TYS, p.33, para 90"},
+{theme:'tys-quality', q:"What does the TYS say about water, sanitation and financial inclusion gaps?", key:["About 411 million people lacked basic drinking water access as of 2022","67% of the population lacks basic sanitation","Only 37% of women have a bank account vs 48% of men"], answer:"Despite roughly 500 million people gaining basic water access between 2000 and 2020, population growth has outpaced progress: by 2022 about 411 million people still lacked basic drinking water, and 67% of the population lacked basic sanitation. On financial inclusion, only 37% of women hold a bank account versus 48% of men — a gap the strategy treats as both a fairness and growth issue.", quote:"(411 million without basic water access, 2022; 37% women vs 48% men banked)", cite:"TYS, p.34, paras 92-93"},
+{theme:'tys-quality', q:"What are the Bank's five priority areas under 'Improve the Quality of Life for the People of Africa'?", key:["Filling critical infrastructure gaps in national health systems","Delivering climate-resilient water and sanitation services","Accelerating access to finance for women- and youth-led start-ups/MSMEs","Supporting technical and vocational education (TVET) and STEM","Investing in employment skills, youth entrepreneurship and ecosystem support"], answer:"The five priority areas are: closing critical health-system infrastructure gaps; delivering climate-resilient water and sanitation services; accelerating access to finance for women- and youth-led start-ups and MSMEs; expanding technical and vocational education (TVET) and STEM training; and investing in employment skills and youth entrepreneurship ecosystems, including through dedicated financing vehicles.", quote:"(five priority areas, para 94)", cite:"TYS, p.34-35, para 94"},
+{theme:'tys-quality', q:"What is a Youth Entrepreneurship Investment Bank (YEIB), and why does the TYS include it?", key:["A dedicated financing vehicle to support youth entrepreneurship, to be established across Africa","Sits under the 'Improve Quality of Life' pillar's focus on youth economic opportunity"], answer:"Youth Entrepreneurship Investment Banks (YEIBs) are financing vehicles the Bank plans to establish across Africa specifically to back youth entrepreneurship — reflecting the strategy's view that improving quality of life isn't just about services like health and water, but also about giving young Africans direct access to capital to build businesses.", quote:"(Youth Entrepreneurship Investment Banks, para 94)", cite:"TYS, p.35, para 94"},
+
+// --- tys-cross ---
+{theme:'tys-cross', q:"What five cross-cutting priorities does the TYS say must run through all of the High 5s?", key:["Promote gender equality","Invest in young people","Respond to climate change and invest in climate action","Build resilience to shocks, conflict and fragility","Strengthen economic governance"], answer:"The five cross-cutting priorities are: promoting gender equality; investing in young people; responding to climate change; building resilience to shocks, conflict and fragility; and strengthening economic governance. The TYS frames these as necessary for the High 5s to achieve their full transformative potential — not optional add-ons.", quote:"For the High 5s to achieve their transformative potential, a set of cross-cutting priorities need to be pursued.", cite:"TYS, p.36, para 95"},
+{theme:'tys-cross', q:"What concrete commitment does the Bank make on gender equality, and through what mechanism?", key:["At least 80% of public-sector operations and 50% of private-sector operations will directly benefit women and girls","Tracked via the Bank's Gender Marker System","Key delivery vehicle: Affirmative Finance Action for Women in Africa (AFAWA)"], answer:"The Bank commits that at least 80% of its public-sector operations and 50% of its private-sector operations will directly benefit women and girls, tracked through its Gender Marker System. The main delivery vehicle for this is AFAWA — Affirmative Finance Action for Women in Africa — which targets financing gaps women face, motivated partly by the finding that women's farm productivity runs 20-30% below men's due to unequal access to land and finance.", quote:"Closing Africa's gender gaps will promote social justice and fairness, but it is also an imperative for inclusive economic growth. That is why gender equality will be central to the Bank's Ten-Year Strategy.", cite:"TYS, p.36-37, para 96-97"},
+{theme:'tys-cross', q:"What jobs gap does the TYS cite to justify its youth investment priority?", key:["10-12 million young people enter Africa's labour market each year","Only about 3 million formal-sector jobs are created annually","Successor plan: Youth, Skills and Jobs Action Plan 2025-2032"], answer:"Each year, 10 to 12 million young people enter Africa's labour market, but only about 3 million formal-sector jobs are created to absorb them — a gap in the millions every single year. The Bank's response is the Youth, Skills and Jobs Action Plan 2025–2032, successor to its 2016–2025 Jobs for Youth in Africa strategy, alongside continued build-out of Youth Entrepreneurship Investment Bank financing.", quote:"Each year for the 10-12 million young women and men entering Africa's labour markets, only 3 million formal sector jobs are being created.", cite:"TYS, p.37, para 98"},
+{theme:'tys-cross', q:"What climate financing numbers does the TYS use to make its case, and what's the Bank's own commitment?", key:["Africa needs USD2.6-2.8 trillion by 2030 to meet its climate commitments (NDCs)","Congo Basin forest removes ~USD55 billion of carbon value/year but received only ~USD170 million/year in international finance (2010-2020)","Bank has committed to at least 40% of its annual investment as climate finance"], answer:"Africa needs an estimated USD2.6–2.8 trillion by 2030 to meet its climate commitments (NDCs), and the mismatch between value and finance received is stark: the Congo Basin forest removes about USD55 billion worth of carbon a year — equal to 36% of the combined GDP of the surrounding countries — yet drew only around USD170 million a year in international public finance between 2010 and 2020. The Bank has committed to directing at least 40% of its own annual investments to climate finance.", quote:"No region has contributed less to climate change – and no region faces graver threats than Africa.", cite:"TYS, p.3 / p.39, paras 99-101"},
+{theme:'tys-cross', q:"How does the TYS define good economic governance, and what does it mean concretely?", key:["Framed as 'the contract between states and citizens'","Concrete focus areas: domestic resource mobilisation, public financial management, transparency, anti-corruption, sustainable debt management, natural resource governance"], answer:"The TYS frames governance not as a technocratic checkbox but as 'the contract between states and citizens' — the ability of governments to manage economies in ways that share prosperity and build resilience. Concretely, this priority covers domestic resource mobilisation, public expenditure and financial management, transparency and anti-corruption, sustainable debt management, and governance of natural resources.", quote:"Good governance is about the contract between states and citizens and the ability of governments to nurture economies to share prosperity and build resilience.", cite:"TYS, p.42, para 112/121"},
+
+// --- tys-public ---
+{theme:'tys-public', q:"Why does the TYS add a separate tier for 'global and regional public goods' on top of the High 5s?", key:["Responds to a broader call for multilateral development banks (MDBs) to scale up action on global challenges","Positioned as a third tier alongside the High 5s and cross-cutting priorities"], answer:"This tier exists because multilateral development banks globally are being pushed to do more on challenges that cross borders — climate, pandemics, regional stability — rather than only funding country-level projects. The TYS adds global and regional public goods as a distinct third layer of its framework, alongside the High 5s and the cross-cutting priorities, to make that commitment explicit.", quote:"(response to the MDB call to scale up regional/global public goods investment)", cite:"TYS, p.5, Introduction"},
+{theme:'tys-public', q:"What five priority areas does the TYS name under global and regional public goods?", key:["Climate change","Pandemic preparedness and public health","Regional peace, stability and resilience","Debt and financial sustainability","Food and energy security"], answer:"The five named areas are climate change, pandemic preparedness and public health, regional peace and stability, debt and financial sustainability, and food and energy security — the last two explicitly tying back into the Feed Africa and Light Up and Power Africa pillars.", quote:"(five global/regional public goods priorities, para 122)", cite:"TYS, p.45, para 122"},
+{theme:'tys-public', q:"What is the African Pharmaceutical Technology Foundation (APTF), and how does it fit the public-health priority?", key:["A proposed investment of up to USD3 billion to build an indigenous pharmaceutical industry","Based in Kigali, Rwanda","Sits alongside the Bank acting as an Implementing Entity for the World Bank's Pandemic Fund"], answer:"The African Pharmaceutical Technology Foundation is a proposed vehicle, based in Kigali, Rwanda, through which the Bank is exploring investment of up to USD3 billion to build up an indigenous African pharmaceutical industry — directly connected to the pandemic-preparedness priority, alongside the Bank's role as an Implementing Entity for the World Bank's Pandemic Fund.", quote:"(APTF, up to USD3 billion, Kigali-based)", cite:"TYS, p.47, Box 3"},
+
+// --- tys-finance ---
+{theme:'tys-finance', q:"What is the Bank's central private-sector ambition for 2033?", key:["'By 2033, the private sector will be at the heart of the African Development Bank's work'","Goal to triple non-sovereign operations (NSO) financing to about USD7.5 billion per year"], answer:"The strategy states plainly that by 2033, the private sector will be at the heart of the Bank's work — a shift from a historically sovereign-lending-dominated institution. Concretely, this means tripling non-sovereign operations financing to roughly USD7.5 billion a year by the end of the strategy period.", quote:"By 2033, the private sector will be at the heart of the African Development Bank's work.", cite:"TYS, p.vi / p.51, para 149"},
+{theme:'tys-finance', q:"What overall capital-raising ambition does the TYS set for itself and the ADF?", key:["Aims to boost financing capacity by roughly USD73 billion for the Bank","Plus roughly USD26 billion for the African Development Fund (ADF), over the life of the strategy"], answer:"Across the ten-year period, the Bank is targeting roughly USD73 billion in additional financing capacity for itself, plus about USD26 billion for the African Development Fund (its concessional-lending arm for the poorest countries) — a combined ambition to substantially scale up firepower well beyond a simple capital increase.", quote:"(USD73 billion for the Bank and USD26 billion for the ADF)", cite:"TYS, p.56, para 163"},
+{theme:'tys-finance', q:"What innovative financial instruments does the TYS point to as proof of concept for scaling up?", key:["Sustainable Hybrid Capital — a new asset class using re-channelled IMF Special Drawing Rights","A 2022 risk-transfer transaction moving risk on USD2 billion of sovereign loans to private insurers","Together these unlocked over USD10 billion in additional lending capacity to date"], answer:"The Bank points to instruments like Sustainable Hybrid Capital — a new asset class built on re-channelled IMF Special Drawing Rights — and a 2022 transaction that transferred risk on USD2 billion of sovereign loan assets to private insurers, freeing up capital for climate investment. Together, instruments like these have already unlocked more than USD10 billion in additional lending capacity, which the Bank cites as evidence its scaling ambitions are achievable, not just aspirational.", quote:"(Sustainable Hybrid Capital; USD10+ billion unlocked via risk transfers)", cite:"TYS, pp.55-56"},
+
+// --- tys-risk ---
+{theme:'tys-risk', q:"What is the boldest self-critical line the TYS uses to describe the global financing environment for Africa?", key:["'The global financial architecture has failed Africa'","Backed by figures: ~USD500 billion financing gap (2021-2025, IMF estimate) and only ~3% of global climate finance going to Africa"], answer:"The TYS states bluntly that 'the global financial architecture has failed Africa' — a strong claim for an institution embedded in that architecture to make about itself and its peers. It backs this with figures: the IMF estimated Africa needed around USD500 billion between 2021 and 2025 just to return to its pre-pandemic growth path, and only about 3% of global climate finance actually reaches Africa.", quote:"The global financial architecture has failed Africa.", cite:"TYS, p.53, para 157-158"},
+{theme:'tys-risk', q:"How does the TYS characterise Africa's debt situation?", key:["Public debt reached about USD1.8 trillion in 2022","24 African countries were in or near debt distress (2023)","Debt-to-GDP ratio rose sharply over the past decade, to roughly 66-71%","Existing debt-resolution tools (Paris Club, G20 Common Framework) described as slow and increasingly ineffective"], answer:"Public debt across Africa reached about USD1.8 trillion by 2022, with 24 countries either in debt distress or at high risk of it as of 2023. The debt-to-GDP ratio has climbed sharply — from around 38% in 2010 to roughly 66-71% more recently — and the TYS is candid that existing resolution tools like the Paris Club and the G20 Common Framework are too slow and increasingly ill-suited, since much of the newer debt is held by non-traditional creditors and bondholders rather than traditional lenders.", quote:"(USD1.8 trillion public debt, 2022; 24 countries in/near distress)", cite:"TYS, p.10, para 24 / p.52, para 153"},
+{theme:'tys-risk', q:"What does the TYS admit about implementation problems with its own previous ten-year strategy (2013-2022)?", key:["Cites an independent evaluation that flagged implementation shortfalls","Names persistent low disbursement rates and portfolio management challenges","Also cites insufficient readiness of the Indicative Operational Programme (IOP)"], answer:"The TYS is unusually candid about its predecessor: citing an independent evaluation of the 2013–2022 strategy, it acknowledges 'insufficient' progress, evidenced by persistently low disbursement rates, portfolio management challenges, and insufficient readiness of the Indicative Operational Programme. This self-critique is presented as part of the justification for the new strategy's design.", quote:"...progress is insufficient... as evidenced by the persistent low disbursement rate, portfolio management challenges and insufficient readiness of the Indicative Operational Programme (IOP).", cite:"TYS, p.62, para 193"},
+{theme:'tys-risk', q:"What internal institutional tension does the TYS admit to around risk-taking?", key:["Tension between protecting its AAA credit rating and expanding higher-risk private-sector business","Admits this 'often leads to a culture of risk avoidance in the guise of informed risk-taking'","Also admits this produces a 'longer and heavier decision-making process'"], answer:"The Bank openly admits a structural tension between preserving its AAA credit rating and expanding into higher-risk private-sector and fragile-state business. It states this trade-off 'often leads to a culture of risk avoidance in the guise of informed risk-taking, accompanied by a longer and heavier decision-making process' — a rare acknowledgment of internal bureaucratic drag from an institution writing its own strategy.", quote:"This often leads to a culture of risk avoidance in the guise of informed risk-taking, accompanied by a longer and heavier decision-making process.", cite:"TYS, p.50, para 141"},
+{theme:'tys-risk', q:"What does the TYS say about Africa's overall trajectory toward the Sustainable Development Goals (SDGs)?", key:["States plainly that Africa (like much of the world) is off-track to meet most SDG targets by 2030"], answer:"The TYS states directly that 'much of the world, including Africa, is off-track to reach most of the SDG targets by 2030' — using this as part of the urgency case for accelerating and scaling up the High 5s rather than continuing at the prior pace.", quote:"Much of the world, including Africa, is off-track to reach most of the SDG targets by 2030.", cite:"TYS, p.7, para 12"},
+
+// --- tah-context ---
+{theme:'tah-context', q:"Who is Dr. Sidi Ould Tah, and what track record does he point to?", key:["President of BADEA (Arab Bank for Economic Development in Africa) for the prior decade","Grew BADEA's total assets ~75% (USD4bn to ~USD7bn) and cut non-performing loans from 11% to 0.5%","Also served 8 years as Mauritania's Minister of Finance and Economy"], answer:"Dr. Tah's core credential is a decade as President of BADEA, the Arab Bank for Economic Development in Africa, where he says he repositioned it as a Tier-1, AA+/AAA-rated institution — growing total assets by about 75%, from USD4 billion to nearly USD7 billion, while cutting non-performing loans from 11% down to 0.5%. He also served eight years as Mauritania's Minister of Finance and Economy, giving him experience on both the government-borrower side and the MDB-lender side.", quote:"(BADEA track record; Mauritania Minister of Finance and Economy)", cite:"Tah Vision, p.22", group:'tah'},
+{theme:'tah-context', q:"What is the organizing framework of Dr. Tah's vision document, and what is it explicitly NOT meant to be?", key:["Organized around 'Four Cardinal Points'","Explicitly stated NOT to replace the High 5 initiative — it 'refines and deepens its intent'"], answer:"His document is organised around what he calls the 'Four Cardinal Points' — a narrower set of urgent priorities. He is explicit that this is not a replacement for the Bank's existing High 5 framework, but a refinement that sharpens focus onto what he sees as the most urgent priorities given today's constrained financial environment.", quote:"This new framework does not replace the High 5 initiative; instead, it refines and deepens its intent by concentrating on actions across four interlinked priorities that are most urgently needed in today's environment.", cite:"Tah Vision, p.3"},
+
+// --- tah-cp1 ---
+{theme:'tah-cp1', q:"What financing gap figure does Dr. Tah cite, and what is his signature numeric ambition for capital efficiency?", key:["Cites a financing gap exceeding USD400 billion annually","Signature line: turn every USD1 raised into USD10 or more of productive investment"], answer:"Dr. Tah cites a financing gap exceeding USD400 billion a year as the Bank's most urgent problem to solve. His signature ambition is a capital-multiplier goal: turning every dollar the Bank raises into USD10 or more of productive, transformative investment — a much larger leverage ratio than the Bank currently achieves.", quote:"I aim to turn every $1 raised into $10 or more productive investment.", cite:"Tah Vision, p.9"},
+{theme:'tah-cp1', q:"What new financial instruments and business-model shift does Dr. Tah propose under Cardinal Point 1?", key:["Green bonds, social impact bonds, blended finance mechanisms","A shift toward structuring projects from the start to be sold to or shared with private investors, rather than the Bank holding assets long-term"], answer:"He proposes expanding use of green bonds, social impact bonds, and blended finance mechanisms, while also pushing a business-model shift: structuring projects from the outset so they can later be shared with or sold to private investors, rather than the Bank holding assets on its balance sheet for the long term. The goal is to turn the Bank's balance sheet over faster and multiply its overall lending capacity.", quote:"(project origination for later syndication/sale to private investors)", cite:"Tah Vision, p.9"},
+{theme:'tah-cp1', q:"What background capital growth does Dr. Tah cite for the Bank, and what does he say is still needed?", key:["AfDB's authorized capital grew from USD94 billion (2014) to USD318 billion (2024)","Despite that growth, he says funding capacity needs to roughly triple to meet Agenda 2063/SDG ambitions"], answer:"He notes that the Bank's authorized capital already grew substantially, from USD94 billion in 2014 to USD318 billion in 2024, as evidence the institution can scale. But he argues that's still not enough — meeting Agenda 2063 and SDG ambitions requires roughly tripling the Bank's funding capacity from where it stands now.", quote:"(capital growth USD94bn to USD318bn, 2014-2024; need to triple funding capacity)", cite:"Tah Vision, p.7"},
+{theme:'tah-cp1', q:"How does Dr. Tah want local and regional African banks to fit into his capital-mobilisation model?", key:["Sees local/regional banks as 'transformative agents' given their understanding of local conditions","Model: AfDB provides long-term capital and technical support, while local banks handle origination"], answer:"Drawing on his BADEA experience, he argues local and regional African banks — because of their inherent understanding of local conditions — can act as transformative agents if properly capitalised. His proposed model has the AfDB supplying long-term capital and technical support while local banks handle deal origination on the ground, extending the Bank's reach without it having to build local presence from scratch everywhere.", quote:"African banks, endowed with an innate understanding of local conditions, can serve as transformative agents if adequately supported with capital.", cite:"Tah Vision, p.4"},
+
+// --- tah-cp2 ---
+{theme:'tah-cp2', q:"What problem does Dr. Tah identify in Cardinal Point 2 around Africa's own domestic capital?", key:["Africa has substantial domestic capital (e.g., pension funds) that remains largely untapped","Structural issues: narrow tax bases, weak public financial management, fragmented institutions"], answer:"He argues Africa already has significant domestic capital — for example in pension funds — that remains largely untapped because of narrow tax bases, weak public financial management, and financial institutions that operate in a fragmented, country-by-country way rather than as a connected system.", quote:"Africa has a wealth of natural assets and a growing pool of domestic capital that remains largely untapped.", cite:"Tah Vision, p.11"},
+{theme:'tah-cp2', q:"What does Dr. Tah propose to unify Africa's financial institutions, and why now?", key:["Proposes unifying fragmented institutions (local banks to regional development agencies) into a cohesive pan-African network","Motivated partly by global shocks: tariff wars, sanctions disrupting maritime routes, challenges to traditional currency dominance"], answer:"He proposes unifying Africa's fragmented financial institutions — from local banks up to regional development agencies — into a single, cohesive, agile pan-African network, with standardized protocols and shared risk-management and reporting systems. He frames the urgency around global instability: tariff wars, sanctions complicating maritime trade routes, and challenges to the dominance of traditional reserve currencies, all of which he says have exposed African vulnerabilities.", quote:"Africa must reengineer its financial architecture, unifying its fragmented institutions into a cohesive, agile network that can effectively manage risk and mobilize capital.", cite:"Tah Vision, p.4 / p.11-12"},
+{theme:'tah-cp2', q:"What global-governance reforms does Dr. Tah call for under Cardinal Point 2?", key:["More accurate risk assessments / improved credit-rating methodologies for African borrowers","Recalibrating rules of global capital allocation","Reforming debt-management frameworks"], answer:"He calls for reforms to how Africa is treated within the global financial system itself: more accurate risk assessment and credit-rating methodologies (which he implies currently overstate African risk), recalibrated rules for how global capital gets allocated, and reformed debt-management frameworks — arguing the AfDB should lead this push rather than wait for it to happen externally.", quote:"Reforming global financial governance is critical to ensuring Africa is not sidelined in international decision-making processes.", cite:"Tah Vision, p.12"},
+
+// --- tah-cp3 ---
+{theme:'tah-cp3', q:"What demographic numbers does Dr. Tah cite, and what does he say is at risk if nothing changes?", key:["Africa's population: 283 million (1960) to over 1.5 billion today to a projected 2.5 billion by 2050","Warns the 'demographic dividend' will remain untapped without structural transformation and job creation"], answer:"He cites Africa's population growth from 283 million in 1960 to over 1.5 billion today, projected to reach 2.5 billion by 2050. He frames this as both opportunity and risk: without structural economic transformation that creates millions of quality jobs, the potential 'demographic dividend' of a young, growing workforce will simply go untapped.", quote:"In 1960, the population stood at 283 million; today it exceeds 1.5 billion, and by 2050, it is projected to reach 2.5 billion.", cite:"Tah Vision, p.5"},
+{theme:'tah-cp3', q:"How large is Africa's informal economy according to Dr. Tah, and how does he want to address it?", key:["Nearly 83% of Africans work in the informal sector","Proposes formalization: simplified business registration, better tax systems, targeted microfinance, digital marketplace access"], answer:"He states that nearly 83% of Africans work in the informal sector, which he calls 'the heartbeat of African economies' rather than a problem to eliminate. His proposed response is formalization without destruction: simplifying business registration, reforming tax systems to be less punitive, offering targeted microfinance and sector-specific incubation, and giving informal businesses access to digital marketplaces so they can connect with the formal economy.", quote:"Nearly 83% of Africans work in this vibrant but long-marginalized economy... the informal sector is the heartbeat of African economies.", cite:"Tah Vision, p.5"},
+{theme:'tah-cp3', q:"What is the 'Africa Skills Passport' initiative Dr. Tah proposes?", key:["A proposed mechanism to facilitate labour mobility across the continent","Would let African talent move between industries and geographies to meet labour-market demand"], answer:"The Africa Skills Passport is his proposal for a continent-wide credential/mobility mechanism that would let workers' skills be recognised across borders, enabling African talent to move more freely between industries and countries to match labour supply with demand — directly tied to his broader push for regional integration.", quote:"Could facilitate labour mobility across the continent, enabling African talent to seamlessly move between industries and geographies to meet labour market demands.", cite:"Tah Vision, p.13"},
+{theme:'tah-cp3', q:"Who does Dr. Tah say should be prioritised within the informal-sector push, and why?", key:["Women, who 'anchor the informal sector and small enterprises' but are excluded from finance, technology and markets","Proposes targeted training, mentorship and credit programmes for them"], answer:"He singles out women as a priority within this push, noting that they anchor much of the informal sector and small-enterprise activity yet remain largely excluded from financial services, technology, and markets. His response is targeted training, mentorship, and credit programmes aimed specifically at women running informal and small businesses.", quote:"(women anchoring the informal sector, excluded from finance/technology/markets)", cite:"Tah Vision, pp.5-6"},
+
+// --- tah-cp4 ---
+{theme:'tah-cp4', q:"What does Dr. Tah say Africa is losing by exporting raw materials without processing them?", key:["Natural resource wealth (critical minerals, renewable potential) largely exported in raw form","This 'deprives the continent of the wealth-creating benefits of value addition'"], answer:"He argues Africa's natural-resource wealth — critical minerals and renewable energy potential especially — is mostly exported raw, which strips the continent of the wealth-creating benefits that come from processing and refining it locally. His fix is investment in regional industrial hubs that do beneficiation and value addition before export.", quote:"(raw material exports depriving Africa of value-addition benefits)", cite:"Tah Vision, p.6"},
+{theme:'tah-cp4', q:"What is Dr. Tah's stance on oil and gas investment, and how does he frame the energy transition?", key:["Opposes outright bans on oil and gas investment","Favors a 'just and gradual transition' balancing renewables, traditional energy sources, energy security and affordability"], answer:"Unlike positions that call for a hard break from fossil fuels, Dr. Tah argues against outright bans on oil and gas investment. He frames the right approach as a 'just and gradual transition' that lets African economies use both renewable and traditional energy sources while progressively reducing emissions — prioritising energy security and affordability alongside climate goals.", quote:"Rather than imposing outright bans on oil and gas investments, the focus should be on a just and gradual transition that enables African economies to harness both renewable and traditional energy sources while progressively reducing carbon emissions.", cite:"Tah Vision, p.15"},
+{theme:'tah-cp4', q:"How does Dr. Tah frame the opportunity in digital infrastructure and the 'data economy'?", key:["Frames digital/data infrastructure as letting Africa 'leapfrog' traditional development models","Includes broadband, data centres, AI-driven business models and fintech as catalysts for productivity growth"], answer:"He frames digital infrastructure — broadband connectivity, data centres, AI-driven business models, fintech — as a chance for Africa to leapfrog traditional, sequential development paths rather than replicate them. The goal, in his words, is ensuring that 'geography does not constrain economic activities,' with digital connectivity closing gaps physical infrastructure alone can't close fast enough.", quote:"(digital/data economy enabling Africa to 'leapfrog' traditional development models)", cite:"Tah Vision, pp.15-16"},
+{theme:'tah-cp4', q:"What twin infrastructure goal does Dr. Tah set under Cardinal Point 4?", key:["Bridge the infrastructural/digital divide between rural and urban areas","Ensure infrastructure investments are designed to withstand future climate shocks"], answer:"He sets a twin goal: closing the infrastructural and digital divide between rural and urban Africa, while simultaneously making sure new infrastructure investments are built to withstand future climate shocks — treating resilience as a design requirement from the start, not a retrofit.", quote:"Infrastructure projects must be designed to bridge the gap between rural production centres and urban markets.", cite:"Tah Vision, p.15"},
+
+// --- tah-institution ---
+{theme:'tah-institution', q:"What is Dr. Tah's overarching argument for reforming the Bank's own internal operations?", key:["Argues institutional efficiency isn't just about optimizing processes but aligning every part of the Bank's operations with Africa's development goals","Frames it as essential to using resources most effectively"], answer:"His core argument is that internal efficiency isn't a housekeeping issue — it's about making sure every part of how the Bank operates is genuinely aligned with Africa's bold development goals, so that scarce resources are used as effectively as possible. In other words, institutional reform is presented as a precondition for delivering on the substantive priorities, not a separate track.", quote:"Institutional efficiency is not merely about optimizing internal processes; it is about aligning every aspect of the Bank's operation with Africa's bold development goals, ensuring that its resources are utilized most effectively.", cite:"Tah Vision, p.17"},
+{theme:'tah-institution', q:"What three named sub-strategies make up Dr. Tah's 'Futureproofing the Bank' agenda?", key:["Reforming internal processes to align with ambition (decentralizing decision-making, empowering regional offices)","Institutionalizing a culture of results and accountability","Fostering strategic partnerships for greater impact"], answer:"The three sub-strategies are: reforming internal processes to match the Bank's ambition, including decentralizing decision-making and empowering regional offices; institutionalizing a results-based, accountability-focused culture with performance-aligned incentives; and fostering deeper strategic partnerships with the private sector, other international financial institutions, and African governments to multiply the impact of every dollar invested.", quote:"The African Development Bank must modernize its internal structures, moving beyond traditional bureaucratic models towards a more streamlined, results-oriented framework.", cite:"Tah Vision, p.18"},
+{theme:'tah-institution', q:"What role does Dr. Tah say the Bank should play in fragile and conflict-affected regions?", key:["Should play a critical role stabilizing vulnerable regions","Includes funding post-conflict reconstruction, promoting job creation, supporting social cohesion initiatives"], answer:"He argues the Bank should take an active, critical role in stabilising vulnerable regions — funding post-conflict reconstruction, promoting job creation, and backing social cohesion initiatives — on the logic that reducing economic disparities is itself a way to prevent further instability, not just a response to it after the fact.", quote:"The African Development Bank must play a critical role in stabilizing vulnerable regions, funding post-conflict reconstruction, promoting job creation, and supporting social cohesion initiatives that reduce economic disparities and prevent further instability.", cite:"Tah Vision, p.21"},
+
+// --- tah-relation ---
+{theme:'tah-relation', q:"How does Dr. Tah explicitly position his 'Four Cardinal Points' relative to the existing High 5 framework?", key:["States clearly his framework does NOT replace the High 5s","Says it 'refines and deepens' the High 5s' intent by focusing on what's most urgent right now","Credits the High 5s with touching nearly 500 million Africans"], answer:"He is careful to position the Four Cardinal Points as continuity, not rupture: explicitly stating the new framework does not replace the High 5 initiative, but refines and deepens its intent by concentrating on the most urgent priorities given today's environment. He credits the High 5s with having already touched the lives of nearly 500 million Africans and driven pan-African cooperation.", quote:"The transformative spirit of the 'High 5' is an enduring legacy—but it is now time to sharpen the Bank's focus and deliver on key priorities.", cite:"Tah Vision, p.2-3"},
+{theme:'tah-relation', q:"What does Dr. Tah say about AfCFTA and the Bank's role in it?", key:["Calls AfCFTA a project that has 'ignited a spark of hope' for an integrated economic space","Says AfDB is 'well positioned to be one of those hands' steering its complex implementation"], answer:"He describes AfCFTA as having ignited real hope for an integrated African economic space where trade barriers fall away, while acknowledging it's a complex, multi-layered project that needs steady management. He positions the AfDB as one of the institutions best placed to help steer that implementation forward.", quote:"The AfCFTA has ignited a spark of hope: the promise of an integrated economic space where barriers fall away and intra-African trade flourishes. But this is a complex and multi-layered project and requires firm hands on the tiller of progress. The African Development Bank is well positioned to be one of those hands.", cite:"Tah Vision, p.21"},
+
+// --- synth ---
+{theme:'synth', q:"Both documents cite large but different financing-gap figures — how would you reconcile them in an interview answer?", key:["TYS: Africa needs ~USD1.3 trillion/year by 2030 for sustainable development; IMF estimate of ~USD500bn (2021-2025) just to return to pre-pandemic growth path","Tah: cites a gap 'exceeding USD400 billion annually' and calls to triple the Bank's own funding capacity","Key distinction: these measure different things — total continental development need vs. the Bank's own institutional capacity gap — not competing claims"], answer:"These aren't contradictory, they're measuring different things at different scopes. The TYS's figures (USD1.3 trillion/year by 2030, or the IMF's ~USD500 billion 2021-2025 estimate) describe Africa's total external financing need across all sources — governments, all MDBs, private capital, aid. Dr. Tah's USD400 billion/year figure and his call to triple the Bank's funding capacity are narrower: they're about what the AfDB specifically should be capable of mobilising as one actor within that much larger system. A strong answer shows you can hold both figures without treating them as competing.", quote:"(TYS: USD1.3tn/yr, p.54; Tah: >USD400bn/yr, p.4)", cite:"Cross-document"},
+{theme:'synth', q:"How does the TYS's 'Improve Quality of Life' pillar relate to Dr. Tah's Cardinal Point 3 on demographic transformation?", key:["Both center on youth and women as priority populations","TYS emphasizes service delivery: health, water/sanitation, TVET/STEM, access to finance for MSMEs","Tah emphasizes structural economic inclusion: formalizing the informal sector (83% of workers), labour mobility (Skills Passport)","Complementary, not duplicative: TYS builds human capital/services, Tah focuses on economic structure and job quality"], answer:"They overlap in who they prioritise — young people and women — but differ in emphasis. The TYS pillar leans toward service delivery: closing gaps in health infrastructure, water and sanitation, and vocational/STEM education, alongside access to finance. Dr. Tah's Cardinal Point 3 goes further upstream, focused on the structure of the economy itself — formalising the 83% of Africans working informally and improving labour mobility through ideas like the Africa Skills Passport. You could argue his framing complements the TYS by addressing the economic-structure side that the TYS pillar treats more lightly.", quote:"(TYS pillar, p.33-35; Tah Cardinal Point 3, pp.5, 13)", cite:"Cross-document"},
+{theme:'synth', q:"Compare the industrial strategies in both documents — 'Industrialise Africa' vs. Cardinal Point 4.", key:["Both target beneficiation/value addition of critical minerals rather than raw export","TYS names five specific priority sectors (agroprocessing, minerals, connectivity/digital, pharma, textiles)","Tah frames it more broadly around 'regional industrial hubs' and ties it tightly to climate-resilient infrastructure and the energy transition"], answer:"Both converge on the same core idea — stop exporting raw materials, especially critical minerals, and capture more value through processing at home. The TYS operationalises this with five specific priority sectors: agroprocessing, mineral beneficiation, connectivity/digital infrastructure, pharmaceuticals, and textiles. Dr. Tah's Cardinal Point 4 makes a similar argument but frames it more broadly around building 'regional industrial hubs,' and ties it more tightly to infrastructure resilience and his 'just and gradual' energy-transition stance — so his version reads as more infrastructure-and-energy-led, while the TYS's is more sector-by-sector.", quote:"(TYS p.30, para 81; Tah p.6, p.14)", cite:"Cross-document"},
+{theme:'synth', q:"How do the two documents' private-sector mobilisation philosophies compare?", key:["TYS: institutional targets — triple NSO financing to ~USD7.5bn/year, raise USD73bn (Bank) + USD26bn (ADF), specific instruments like Sustainable Hybrid Capital","Tah: a simpler, more rhetorically punchy multiplier target — turn every USD1 into USD10+ — plus a business-model shift toward originating-to-distribute","Difference in register: TYS is a detailed institutional roadmap; Tah's is a leadership pitch built around one memorable ratio"], answer:"The TYS lays out a detailed institutional roadmap: specific targets like tripling non-sovereign operations financing to about USD7.5 billion a year, raising USD73 billion for the Bank and USD26 billion for the ADF, and naming specific instruments like Sustainable Hybrid Capital. Dr. Tah's version is more of a leadership pitch, condensed into one memorable ratio — turn every USD1 into USD10 or more — paired with a business-model shift toward originating deals to sell down to private investors rather than holding them. Both push the same direction (much more private capital, much more leverage), but the TYS reads as an operating plan while Tah's reads as a mandate he's asking to be given.", quote:"(TYS p.51, para 149; Tah p.9)", cite:"Cross-document"},
+{theme:'synth', q:"Compare the institutional-reform agendas: the TYS's four reform areas vs. Dr. Tah's 'Futureproofing the Bank.'", key:["TYS's four areas: adapting the delivery model, building capacity as a 'solutions bank', building strategic partnerships, strengthening the institutional model","Tah's: reforming internal processes (decentralizing decision-making), institutionalizing results/accountability culture, fostering strategic partnerships","Overlap on partnerships and institutional strengthening; Tah adds sharper language on decentralization and bureaucratic bottlenecks"], answer:"There's real overlap: both call for stronger partnerships and a stronger institutional model. The TYS names four areas — adapting the delivery model, building capacity as a 'solutions bank,' strategic partnerships, and strengthening the institutional model — which read as fairly institutional/technical language. Dr. Tah's 'Futureproofing' pitch covers similar ground but with sharper, more explicit language about decentralizing decision-making, empowering regional offices, and moving 'beyond traditional bureaucratic models' — essentially naming the bureaucracy problem more directly than the TYS does, which is consistent with his outsider-candidate framing even while running for the top job inside the institution.", quote:"(TYS para 172, p.58; Tah p.18)", cite:"Cross-document"},
+{theme:'synth', q:"If asked directly: 'How does Dr. Tah's vision build on the existing Ten-Year Strategy rather than replace it?' — how would you answer?", key:["Anchor in his own words: 'does not replace the High 5 initiative; instead, it refines and deepens its intent'","Show the mechanism: same five High 5 pillars remain the substantive core; his Cardinal Points reprioritize and sharpen delivery given today's tighter financing environment","Note continuity signals: he cites the High 5s' impact (~500 million Africans), stays aligned with Agenda 2063/SDGs like the TYS, and proposes institutional reforms that echo (not contradict) the TYS's own reform agenda"], answer:"The strongest answer quotes him directly: he says his Four Cardinal Points framework 'does not replace the High 5 initiative; instead, it refines and deepens its intent.' In practice that means the substantive goals of the TYS — energy access, food security, industrialisation, integration, quality of life — remain the underlying targets; what changes is the lens of urgency and delivery he layers on top, prioritising capital mobilisation, institutional reform, demographic transformation and climate-resilient infrastructure as the four most pressing execution challenges right now. He reinforces continuity by crediting the High 5s' track record (touching nearly 500 million Africans), keeping the same Agenda 2063/SDG alignment the TYS uses, and proposing institutional reforms that sharpen rather than contradict the TYS's own four-area reform agenda.", quote:"This new framework does not replace the High 5 initiative; instead, it refines and deepens its intent by concentrating on actions across four interlinked priorities that are most urgently needed in today's environment.", cite:"Tah Vision, p.3"},
+];
+
+// ---------- STATE ----------
+let selectedThemes = new Set();
+let bag = [];
+let current = null;
+let stats = {answered:0, good:0, bad:0};
+
+// ---------- BUILD THEME CHIPS ----------
+function countFor(themeId){ return QUESTIONS.filter(q=>q.theme===themeId).length; }
+
+function renderChips(){
+  const containers = {tys: document.getElementById('tysChips'), tah: document.getElementById('tahChips'), synth: document.getElementById('synthChips')};
+  THEMES.forEach(t=>{
+    const c = countFor(t.id);
+    const chip = document.createElement('label');
+    chip.className = 'chip ' + t.group;
+    chip.dataset.theme = t.id;
+    chip.innerHTML = `<input type="checkbox" /> <span>${t.label}</span> <span class="count">${c}</span>`;
+    chip.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(selectedThemes.has(t.id)){ selectedThemes.delete(t.id); chip.classList.remove('on'); }
+      else { selectedThemes.add(t.id); chip.classList.add('on'); }
+      updateStatusLine();
+    });
+    containers[t.group].appendChild(chip);
+  });
+}
+
+function updateStatusLine(){
+  const n = selectedThemes.size;
+  const total = [...selectedThemes].reduce((sum,id)=>sum+countFor(id),0);
+  const status = document.getElementById('statusLine');
+  if(n===0){ status.textContent = 'No themes selected yet.'; }
+  else{ status.textContent = `${n} theme${n>1?'s':''} selected — ${total} question${total!==1?'s':''} in the pool. Click "Start / update session" to begin.`; }
+}
+
+function setAllChips(on){
+  document.querySelectorAll('.chip').forEach(chip=>{
+    const id = chip.dataset.theme;
+    if(on){ selectedThemes.add(id); chip.classList.add('on'); }
+    else{ selectedThemes.delete(id); chip.classList.remove('on'); }
+  });
+  updateStatusLine();
+}
+
+document.getElementById('selectAllBtn').addEventListener('click', ()=>setAllChips(true));
+document.getElementById('clearAllBtn').addEventListener('click', ()=>setAllChips(false));
+document.getElementById('mixAllBtn').addEventListener('click', ()=>{ setAllChips(true); startSession(); });
+document.getElementById('startBtn').addEventListener('click', startSession);
+
+// ---------- SESSION LOGIC ----------
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function buildBag(){
+  const pool = QUESTIONS.filter(q=>selectedThemes.has(q.theme));
+  bag = shuffle(pool);
+}
+
+function startSession(){
+  if(selectedThemes.size===0){
+    document.getElementById('statusLine').textContent = 'Pick at least one theme first.';
+    return;
+  }
+  buildBag();
+  document.getElementById('quizPanel').style.display = 'block';
+  nextQuestion();
+  document.getElementById('quizPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function nextQuestion(){
+  if(bag.length===0){ buildBag(); }
+  if(bag.length===0){
+    document.getElementById('qText').textContent = "No questions match the selected themes.";
+    return;
+  }
+  current = bag.pop();
+  const themeMeta = THEMES.find(t=>t.id===current.theme);
+  document.getElementById('qDocTag').textContent = GROUP_DOC_LABEL[themeMeta.group];
+  document.getElementById('qDocTag').className = 'tag ' + themeMeta.group;
+  document.getElementById('qThemeName').textContent = themeMeta.label;
+  document.getElementById('qProgress').textContent = `${bag.length} left in this mix`;
+  document.getElementById('qText').textContent = current.q;
+  document.getElementById('notesArea').value = '';
+  document.getElementById('answerBox').style.display = 'none';
+  document.getElementById('needsReviewBtn').classList.remove('active');
+  document.getElementById('gotItBtn').classList.remove('active');
+}
+
+document.getElementById('revealBtn').addEventListener('click', ()=>{
+  if(!current) return;
+  document.getElementById('keyPoints').innerHTML = current.key.map(k=>`<li>${k}</li>`).join('');
+  document.getElementById('modelAnswer').textContent = current.answer;
+  document.getElementById('quoteText').textContent = '"' + current.quote + '"';
+  document.getElementById('citeText').textContent = '— ' + current.cite;
+  document.getElementById('answerBox').style.display = 'block';
+});
+
+document.getElementById('skipBtn').addEventListener('click', nextQuestion);
+
+document.getElementById('needsReviewBtn').addEventListener('click', ()=>{
+  stats.answered++; stats.bad++;
+  document.getElementById('statAnswered').textContent = stats.answered;
+  document.getElementById('statBad').textContent = stats.bad;
+  document.getElementById('needsReviewBtn').classList.add('active');
+  setTimeout(nextQuestion, 350);
+});
+document.getElementById('gotItBtn').addEventListener('click', ()=>{
+  stats.answered++; stats.good++;
+  document.getElementById('statAnswered').textContent = stats.answered;
+  document.getElementById('statGood').textContent = stats.good;
+  document.getElementById('gotItBtn').classList.add('active');
+  setTimeout(nextQuestion, 350);
+});
+
+renderChips();
+</script>
+</body>
+</html>
